@@ -12,6 +12,10 @@ $additionalNamespaces = $additionalModulePaths = $moduleDependencies = null;
 $rootPath = realpath(dirname(__DIR__));
 $testsPath = "$rootPath/tests";
 
+if (file_exists('../vendor/autoload.php')) {
+    $loader = include '../vendor/autoload.php';
+}
+
 if (is_readable($testsPath . '/TestConfiguration.php')) {
     require_once $testsPath . '/TestConfiguration.php';
 } else {
@@ -22,6 +26,7 @@ $path = array(
     ZF2_PATH,
     get_include_path(),
 );
+
 set_include_path(implode(PATH_SEPARATOR, $path));
 
 require_once  'Zend/Loader/AutoloaderFactory.php';
@@ -61,7 +66,6 @@ $modules = array($moduleName);
 if (isset($moduleDependencies)) {
     $modules = array_merge($modules, $moduleDependencies);
 }
-
 
 $listenerOptions = new Zend\ModuleManager\Listener\ListenerOptions(array('module_paths' => $modulePaths));
 $defaultListeners = new Zend\ModuleManager\Listener\DefaultListenerAggregate($listenerOptions);
