@@ -1,0 +1,31 @@
+{
+    "name": "assessfirst/InterviewAppModule",
+    "description": "InterviewApp ZF2 module",
+    "keywords": [
+        "InterviewApp",
+        "ZF2",
+        "Module",
+        "assessfirst"
+    ],
+    "authors": [
+        {
+            "name"    : "Assessfirst IT",
+            "homepage": "https://github.com/assessfirst/InterviewAppModule"
+        }
+    ],
+    "require": {
+        "php"               : ">= 5.4.0",
+        "itwapp/itwapp-php" : "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.4.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "InterviewApp": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}
