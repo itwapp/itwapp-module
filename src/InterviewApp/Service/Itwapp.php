@@ -13,8 +13,10 @@ namespace InterviewApp\Service;
  *
  * @author gael
  */
-class Itwapp
+class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
 {
+    use \Zend\ServiceManager\ServiceLocatorAwareTrait;
+
     /**
      * @var \GuzzleHttp\Client
      */
@@ -43,9 +45,14 @@ class Itwapp
     {
     }
 
-    protected function buildSignature($url, $mode, $secretKey)
+    protected function buildUrl($action)
     {
-        $hmac = base64_encode(hash_hmac('sha256', $mode . ':' . $url, $secretKey, true));
+    }
+
+    protected function buildSignature($url, $mode)
+    {
+        $config = $this->getServiceLocator()->get('config');
+        $hmac   = base64_encode(hash_hmac('sha256', $mode . ':' . $url, $config['itwapp']['secretKey'], true));
 
         return md5($hmac);
     }
