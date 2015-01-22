@@ -47,12 +47,53 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
     {
         $url       = '/api/exemple?foo=bar&apiKey=YOUR_KEY_HERE&timestamp=CURRENT_TIMESTAMP_MILLIS';
         $mode      = 'GET';
-        $secretKey = md5('test');
 
         $reflection = new \ReflectionClass(get_class($this->instance));
         $method = $reflection->getMethod('buildSignature');
         $method->setAccessible(true);
 
-        $this->assertEquals('55f8ec9b3e2bcbb2f4dc67ff7ded2bf6', $method->invokeArgs($this->instance, [$url, $mode, $secretKey]));
+        $this->assertEquals('55f8ec9b3e2bcbb2f4dc67ff7ded2bf6', $method->invokeArgs($this->instance, [$url, $mode]));
     }
+
+//    public function testBuildUrl()
+//    {
+//        $this->assertEquals('http://itwapp.io/api/exemple?apiKey=test&timestamp=test&signature=55f8ec9b3e2bcbb2f4dc67ff7ded2bf6', $this->instance->buildUrl());
+//    }
+//
+//    public function testCreateInterview()
+//    {
+//        $this->instance->getClient()->expects($this->once())
+//            ->method('get')
+//            ->willReturn([
+//                '_id'       => '53fb562418060018063095db',
+//                'name'      => 'Test Interview',
+//                'questions' => [
+//                    [
+//                        "content"     => "question 1",
+//                        "readingTime" => 60,
+//                        "answerTime"  => 60,
+//                        "number"      => 1
+//                    ]
+//                ],
+//                'video'    => '',
+//                'text'     => '',
+//                'callback' => 'http://itwapp.io'
+//            ])
+//        ;
+//
+//        $this->assertInstanceOf(
+//            'InterviewApp\DAO\Interview',
+//            $this->instance->createInterview(
+//                'Test Interview',
+//                [
+//                    "content"     => "question 1",
+//                    "readingTime" => 60,
+//                    "answerTime"  => 60,
+//                    "number"      => 1
+//                ],
+//                '',
+//                ''
+//            )
+//        );
+//    }
 }
