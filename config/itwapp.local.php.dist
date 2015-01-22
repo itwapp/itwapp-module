@@ -1,0 +1,14 @@
+<?php
+/*
+ * This contains configuration for the ZF2 AWS SDK for PHP wrapper.
+ * Place this file in `$PROJECT_ROOT/config/autoload` (don't forget to remove
+ * the .dist extension). Change it however you need for your project.
+ */
+
+return [
+    'itwapp' => [
+        'base_url' => 'http://itwapp.io',
+        //'apiKey'    => YOUR_API_KEY,
+        //'secretKey' => YOUR_API_SECRET_KEY
+    ]
+];
