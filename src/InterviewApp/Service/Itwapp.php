@@ -13,6 +13,6 @@ namespace InterviewApp\Service;
  *
  * @author gael
  */
-class Itwapp extends \Itwapp
+class Itwapp
 {
 }
