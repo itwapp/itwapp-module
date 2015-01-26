@@ -41,8 +41,24 @@ class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
         return $this;
     }
 
-    public function createInterview($name, array $questions, $video, $text, $callback = 'http://itwapp.io')
+    public function createInterview($name, array $questions, $video = '', $text = '', $callback = 'http://itwapp.io')
     {
+        $url       = $this->buildUrl('api/v1/interview/', 'POST');
+
+        $response  = $this->getClient()->post(
+            $url,
+            [],
+            [
+                'name'      => $name,
+                'questions' => $questions,
+                'video'     => $video,
+                'text'      => $text,
+                'callback'  => $callback,
+            ],
+            ['future' => true, 'timeout' => 2]
+        );
+
+        return (new \InterviewApp\DAO\Interview())->setData($response->json());
     }
 
     protected function buildUrl($action, $mode)

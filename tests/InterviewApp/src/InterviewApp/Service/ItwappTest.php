@@ -68,40 +68,49 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-//    public function testCreateInterview()
-//    {
-//        $this->instance->getClient()->expects($this->once())
-//            ->method('get')
-//            ->willReturn([
-//                '_id'       => '53fb562418060018063095db',
-//                'name'      => 'Test Interview',
-//                'questions' => [
-//                    [
-//                        "content"     => "question 1",
-//                        "readingTime" => 60,
-//                        "answerTime"  => 60,
-//                        "number"      => 1
-//                    ]
-//                ],
-//                'video'    => '',
-//                'text'     => '',
-//                'callback' => 'http://itwapp.io'
-//            ])
-//        ;
-//
-//        $this->assertInstanceOf(
-//            'InterviewApp\DAO\Interview',
-//            $this->instance->createInterview(
-//                'Test Interview',
-//                [
-//                    "content"     => "question 1",
-//                    "readingTime" => 60,
-//                    "answerTime"  => 60,
-//                    "number"      => 1
-//                ],
-//                '',
-//                ''
-//            )
-//        );
-//    }
+    public function testCreateInterview()
+    {
+        $response = $this->getMock('GuzzleHttp\Message\FutureResponse', [], [], '', false);
+        $this->instance->getClient()->expects($this->once())
+            ->method('post')
+            ->willReturn($response)
+        ;
+        $response->expects($this->once())
+            ->method('json')
+            ->willReturn([
+                '_id'       => '53fb562418060018063095db',
+                'name'      => 'Test Interview',
+                'questions' => [
+                    [
+                        "content"     => "question 1",
+                        "readingTime" => 60,
+                        "answerTime"  => 60,
+                        "number"      => 1
+                    ]
+                ],
+                'video'    => '',
+                'text'     => '',
+                'callback' => 'http://itwapp.io'
+            ])
+        ;
+        $interview = $this->instance->createInterview(
+            'Test Interview',
+            [
+                "content"     => "question 1",
+                "readingTime" => 60,
+                "answerTime"  => 60,
+                "number"      => 1
+            ],
+            '',
+            ''
+        );
+        $this->assertInstanceOf(
+            'InterviewApp\DAO\Interview',
+            $interview
+        );
+        $this->assertEquals(
+            '53fb562418060018063095db',
+            $interview->getId()
+        );
+    }
 }
