@@ -26,6 +26,20 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->instance = new \InterviewApp\Service\Itwapp();
+        $this->instance->setServiceLocator($this->getMock('Zend\ServiceManager\ServiceManager'));
+
+        $this->instance->getServiceLocator()
+            ->expects($this->any())
+            ->method('get')
+            ->willReturn([
+                'itwapp' => [
+                    'base_url'  => 'http://itwapp.io',
+                    'apiKey'    => 'test',
+                    'secretKey' => md5('test')
+                ]
+            ])
+        ;
+
         $this->client   = $this->getMock('\GuzzleHttp\Client', [], [], '', false);
 
         $this->instance->setClient($this->client);
@@ -43,23 +57,17 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->client, $this->instance->getClient());
     }
 
-    public function testBuildSignature()
+    public function testBuildUrl()
     {
-        $url       = '/api/exemple?foo=bar&apiKey=YOUR_KEY_HERE&timestamp=CURRENT_TIMESTAMP_MILLIS';
-        $mode      = 'GET';
-
         $reflection = new \ReflectionClass(get_class($this->instance));
-        $method = $reflection->getMethod('buildSignature');
+        $method = $reflection->getMethod('buildUrl');
         $method->setAccessible(true);
-
-        $this->assertEquals('55f8ec9b3e2bcbb2f4dc67ff7ded2bf6', $method->invokeArgs($this->instance, [$url, $mode]));
+        $this->assertEquals(
+            'http://itwapp.io/api/exemple/?apiKey=test&timestamp=' . time() . '&signature=' . md5(base64_encode(hash_hmac('sha256', 'GET:api/exemple/?apiKey=test&timestamp='.time(), md5('test'), true))),
+            $method->invokeArgs($this->instance, ['api/exemple/', 'GET'])
+        );
     }
 
-//    public function testBuildUrl()
-//    {
-//        $this->assertEquals('http://itwapp.io/api/exemple?apiKey=test&timestamp=test&signature=55f8ec9b3e2bcbb2f4dc67ff7ded2bf6', $this->instance->buildUrl());
-//    }
-//
 //    public function testCreateInterview()
 //    {
 //        $this->instance->getClient()->expects($this->once())

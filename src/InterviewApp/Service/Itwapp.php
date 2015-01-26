@@ -45,15 +45,12 @@ class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
     {
     }
 
-    protected function buildUrl($action)
+    protected function buildUrl($action, $mode)
     {
-    }
+        $config  = $this->getServiceLocator()->get('config');
+        $action .= '?apiKey=' . $config['itwapp']['apiKey'] . '&timestamp=' . time();
+        $hmac    = base64_encode(hash_hmac('sha256', $mode . ':' . $action, $config['itwapp']['secretKey'], true));
 
-    protected function buildSignature($url, $mode)
-    {
-        $config = $this->getServiceLocator()->get('config');
-        $hmac   = base64_encode(hash_hmac('sha256', $mode . ':' . $url, $config['itwapp']['secretKey'], true));
-
-        return md5($hmac);
+        return $config['itwapp']['base_url'] . '/' . $action . '&signature=' . md5($hmac);
     }
 }
