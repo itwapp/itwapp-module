@@ -13,6 +13,60 @@ namespace InterviewApp\Service;
  *
  * @author gael
  */
-class Itwapp extends \Itwapp
+class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
 {
+    use \Zend\ServiceManager\ServiceLocatorAwareTrait;
+
+    /**
+     * @var \GuzzleHttp\Client
+     */
+    protected $client;
+
+    /**
+     * @return \GuzzleHttp\Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param \GuzzleHttp\Client $client
+     * @return \InterviewApp\Service\Itwapp
+     */
+    public function setClient(\GuzzleHttp\Client $client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    public function createInterview($name, array $questions, $video = '', $text = '', $callback = 'http://itwapp.io')
+    {
+        $url       = $this->buildUrl('api/v1/interview/', 'POST');
+
+        $response  = $this->getClient()->post(
+            $url,
+            [],
+            [
+                'name'      => $name,
+                'questions' => $questions,
+                'video'     => $video,
+                'text'      => $text,
+                'callback'  => $callback,
+            ],
+            ['future' => true, 'timeout' => 2]
+        );
+
+        return (new \InterviewApp\DAO\Interview())->setData($response->json());
+    }
+
+    protected function buildUrl($action, $mode)
+    {
+        $config  = $this->getServiceLocator()->get('config');
+        $action .= '?apiKey=' . $config['itwapp']['apiKey'] . '&timestamp=' . time();
+        $hmac    = base64_encode(hash_hmac('sha256', $mode . ':' . $action, $config['itwapp']['secretKey'], true));
+
+        return $config['itwapp']['base_url'] . '/' . $action . '&signature=' . md5($hmac);
+    }
 }
