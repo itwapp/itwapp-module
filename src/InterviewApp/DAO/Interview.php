@@ -13,12 +13,12 @@ namespace InterviewApp\DAO;
  *
  * @author gael
  */
-class Interview
+class Interview extends DAOAbstract
 {
     /**
      * @var int
      */
-    protected $id;
+    protected $_id;
 
     /**
      * @var array
@@ -50,7 +50,7 @@ class Interview
 
     public function getId()
     {
-        return $this->id;
+        return $this->_id;
     }
 
     public function getQuestions()
@@ -75,7 +75,7 @@ class Interview
 
     public function setId($id)
     {
-        $this->id = $id;
+        $this->_id = $id;
     }
 
     public function setQuestions(array $questions)
