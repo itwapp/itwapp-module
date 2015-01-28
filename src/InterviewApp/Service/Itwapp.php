@@ -47,18 +47,62 @@ class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
 
         $response  = $this->getClient()->post(
             $url,
-            [],
             [
-                'name'      => $name,
-                'questions' => $questions,
-                'video'     => $video,
-                'text'      => $text,
-                'callback'  => $callback,
-            ],
-            ['future' => true, 'timeout' => 2]
+                'json' => [
+                    'name'      => $name,
+                    'questions' => $questions,
+                    'video'     => $video,
+                    'text'      => $text,
+                    'callback'  => $callback,
+                ],
+                'exceptions' => false
+            ]
         );
 
         return (new \InterviewApp\DAO\Interview())->setData($response->json());
+    }
+
+    public function getInterview($id)
+    {
+        $url       = $this->buildUrl('api/v1/interview/'.$id, 'GET');
+
+        $response  = $this->getClient()->get($url);
+
+        return (new \InterviewApp\DAO\Interview())->setData($response);
+    }
+
+    public function createApplicant($mail, $lang, $alert, $deadline, \InterviewApp\DAO\Interview $interview,
+        array $questions = [], $message = null, $lastname = null, $firstname = null, $videoLink = null,
+        $textIntro = null, $callback = 'http://itwapp.io'
+    ) {
+        $url       = $this->buildUrl('api/v1/applicant/', 'POST');
+
+        $response  = $this->getClient()->post(
+            $url,
+            [
+                'json' => [
+                    'mail'          => $mail,
+                    'lang'          => $lang,
+                    'alert'         => $alert,
+                    'deadline'      => $deadline,
+                    'interview'     => $interview->getId(),
+                    'questions'     => $questions,
+                    'message'       => $message,
+                    'lastname'      => $lastname,
+                    'firstname'     => $firstname,
+                    'interviewName' => $interview->getName(),
+                    'videoLink'     => $videoLink,
+                    'textIntro'     => $textIntro,
+                    'callback'      => $callback
+                ],
+                'exceptions' => false
+            ]
+        );
+
+        $data              = $response->json();
+        $data['interview'] = $this->getInterview($data['interview']);
+
+        return (new \InterviewApp\DAO\Applicant())->setData($data);
     }
 
     protected function buildUrl($action, $mode)
