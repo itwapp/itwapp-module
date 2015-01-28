@@ -21,6 +21,11 @@ class Interview extends DAOAbstract
     protected $_id;
 
     /**
+     * @var string
+     */
+    protected $name;
+
+    /**
      * @var array
      */
     protected $questions;
@@ -53,6 +58,11 @@ class Interview extends DAOAbstract
         return $this->_id;
     }
 
+    public function getName()
+    {
+        return $this->name;
+    }
+
     public function getQuestions()
     {
         return $this->questions;
@@ -76,6 +86,13 @@ class Interview extends DAOAbstract
     public function setId($id)
     {
         $this->_id = $id;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     public function setQuestions(array $questions)
