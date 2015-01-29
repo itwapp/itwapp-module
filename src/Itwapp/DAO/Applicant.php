@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace InterviewApp\DAO;
+namespace Itwapp\DAO;
 
 /**
  * Description of Applicant
