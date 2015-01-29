@@ -43,7 +43,7 @@ class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
 
     public function createInterview($name, array $questions, $video = '', $text = '', $callback = 'http://itwapp.io')
     {
-        $url       = $this->buildUrl('api/v1/interview/', 'POST');
+        $url       = $this->buildUrl('/api/v1/interview/', 'POST');
 
         $response  = $this->getClient()->post(
             $url,
@@ -64,7 +64,7 @@ class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
 
     public function getInterview($id)
     {
-        $url       = $this->buildUrl('api/v1/interview/'.$id, 'GET');
+        $url       = $this->buildUrl('/api/v1/interview/'.$id, 'GET');
 
         $response  = $this->getClient()->get($url);
 
@@ -75,7 +75,7 @@ class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
         array $questions = [], $message = null, $lastname = null, $firstname = null, $videoLink = null,
         $textIntro = null, $callback = 'http://itwapp.io'
     ) {
-        $url       = $this->buildUrl('api/v1/applicant/', 'POST');
+        $url       = $this->buildUrl('/api/v1/applicant/', 'POST');
 
         $response  = $this->getClient()->post(
             $url,
