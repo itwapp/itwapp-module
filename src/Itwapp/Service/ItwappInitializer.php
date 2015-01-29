@@ -13,12 +13,12 @@ namespace Itwapp\Service;
  *
  * @author gael
  */
-class ItwappInitializer implements Zend\ServiceManager\InitializerInterface
+class ItwappInitializer implements \Zend\ServiceManager\InitializerInterface
 {
     public function initialize($instance, \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
         if ($instance instanceof \Itwapp\Service\Itwapp) {
-            $instance->setClient(new GuzzleHttp\Client);
+            $instance->setClient(new \GuzzleHttp\Client);
         }
 
         return $instance;
