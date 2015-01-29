@@ -25,7 +25,7 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->instance = new \InterviewApp\Service\Itwapp();
+        $this->instance = new \Itwapp\Service\Itwapp();
         $this->instance->setServiceLocator($this->getMock('Zend\ServiceManager\ServiceManager'));
 
         $this->instance->getServiceLocator()
@@ -105,7 +105,7 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
             ''
         );
         $this->assertInstanceOf(
-            'InterviewApp\DAO\Interview',
+            'Itwapp\DAO\Interview',
             $interview
         );
         $this->assertEquals(
@@ -138,7 +138,7 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
         ;
 
         $interview = $this->instance->getInterview('53fb562418060018063095db');
-        $this->assertInstanceOf('InterviewApp\DAO\Interview', $interview);
+        $this->assertInstanceOf('Itwapp\DAO\Interview', $interview);
         $this->assertEquals('Test Interview', $interview->getName());
 
         return $interview;
@@ -147,7 +147,7 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
     /**
      * @depends testCreateInterview
      */
-    public function testCreateApplicant(\InterviewApp\DAO\Interview $interview)
+    public function testCreateApplicant(\Itwapp\DAO\Interview $interview)
     {
         $response = $this->getMock('GuzzleHttp\Message\FutureResponse', [], [], '', false);
         $this->instance->getClient()->expects($this->once())
@@ -211,7 +211,7 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
             $interview
         );
         $this->assertInstanceOf(
-            'InterviewApp\DAO\Applicant',
+            'Itwapp\DAO\Applicant',
             $applicant
         );
         $this->assertEquals(
