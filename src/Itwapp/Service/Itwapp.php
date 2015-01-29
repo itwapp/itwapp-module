@@ -68,7 +68,7 @@ class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
 
         $response  = $this->getClient()->get($url);
 
-        return (new \Itwapp\DAO\Interview())->setData($response);
+        return (new \Itwapp\DAO\Interview())->setData($response->json());
     }
 
     public function createApplicant($mail, $lang, $alert, $deadline, \Itwapp\DAO\Interview $interview,
