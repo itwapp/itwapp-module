@@ -59,7 +59,7 @@ class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
             ]
         );
 
-        return (new \InterviewApp\DAO\Interview())->setData($response->json());
+        return (new \Itwapp\DAO\Interview())->setData($response->json());
     }
 
     public function getInterview($id)
@@ -68,10 +68,10 @@ class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
 
         $response  = $this->getClient()->get($url);
 
-        return (new \InterviewApp\DAO\Interview())->setData($response);
+        return (new \Itwapp\DAO\Interview())->setData($response);
     }
 
-    public function createApplicant($mail, $lang, $alert, $deadline, \InterviewApp\DAO\Interview $interview,
+    public function createApplicant($mail, $lang, $alert, $deadline, \Itwapp\DAO\Interview $interview,
         array $questions = [], $message = null, $lastname = null, $firstname = null, $videoLink = null,
         $textIntro = null, $callback = 'http://itwapp.io'
     ) {
@@ -102,7 +102,7 @@ class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
         $data              = $response->json();
         $data['interview'] = $this->getInterview($data['interview']);
 
-        return (new \InterviewApp\DAO\Applicant())->setData($data);
+        return (new \Itwapp\DAO\Applicant())->setData($data);
     }
 
     protected function buildUrl($action, $mode)
