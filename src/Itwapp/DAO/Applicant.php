@@ -36,7 +36,7 @@ class Applicant extends DAOAbstract
     protected $responses;
 
     /**
-     * @var \InterviewApp\DAO\Interview
+     * @var \Itwapp\DAO\Interview
      */
     protected $interview;
 
@@ -144,7 +144,7 @@ class Applicant extends DAOAbstract
     }
 
     /**
-     * @return \InterviewApp\DAO\Interview
+     * @return \Itwapp\DAO\Interview
      */
     public function getInterview()
     {
@@ -258,7 +258,7 @@ class Applicant extends DAOAbstract
     /**
      * @param int $id
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setId($id)
     {
@@ -270,7 +270,7 @@ class Applicant extends DAOAbstract
     /**
      * @param int $mail
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setMail($mail)
     {
@@ -282,7 +282,7 @@ class Applicant extends DAOAbstract
     /**
      * @param array $questions
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setQuestions(array $questions = [])
     {
@@ -294,7 +294,7 @@ class Applicant extends DAOAbstract
     /**
      * @param array $responses
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setResponses(array $responses = [])
     {
@@ -304,9 +304,9 @@ class Applicant extends DAOAbstract
     }
 
     /**
-     * @param \InterviewApp\DAO\Interview $interview
+     * @param \Itwapp\DAO\Interview $interview
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setInterview(Interview $interview)
     {
@@ -318,7 +318,7 @@ class Applicant extends DAOAbstract
     /**
      * @param \DateTime $dateBegin
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setDateBegin(\DateTime $dateBegin)
     {
@@ -330,7 +330,7 @@ class Applicant extends DAOAbstract
     /**
      * @param \DateTime $dateEnd
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setDateEnd(\DateTime $dateEnd)
     {
@@ -342,7 +342,7 @@ class Applicant extends DAOAbstract
     /**
      * @param \DateTime $dateAnswer
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setDateAnswer(\DateTime $dateAnswer = null)
     {
@@ -354,7 +354,7 @@ class Applicant extends DAOAbstract
     /**
      * @param bool $emailView
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setEmailView($emailView)
     {
@@ -366,7 +366,7 @@ class Applicant extends DAOAbstract
     /**
      * @param bool $linkedClicked
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setLinkedClicked($linkedClicked)
     {
@@ -378,7 +378,7 @@ class Applicant extends DAOAbstract
     /**
      * @param string $firstname
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setFirstname($firstname)
     {
@@ -390,7 +390,7 @@ class Applicant extends DAOAbstract
     /**
      * @param string $lastname
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setLastname($lastname)
     {
@@ -402,7 +402,7 @@ class Applicant extends DAOAbstract
     /**
      * @param string $lang
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setLang($lang)
     {
@@ -414,7 +414,7 @@ class Applicant extends DAOAbstract
     /**
      * @param string $videoLink
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setVideoLink($videoLink)
     {
@@ -426,7 +426,7 @@ class Applicant extends DAOAbstract
     /**
      * @param string $text
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setText($text)
     {
@@ -438,7 +438,7 @@ class Applicant extends DAOAbstract
     /**
      * @param bool $deleted
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setDeleted($deleted)
     {
@@ -450,7 +450,7 @@ class Applicant extends DAOAbstract
     /**
      * @param string $callback
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setCallback($callback = 'http://itwapp.io')
     {
@@ -462,7 +462,7 @@ class Applicant extends DAOAbstract
     /**
      * @param int $status
      *
-     * @return \InterviewApp\DAO\Applicant
+     * @return \Itwapp\DAO\Applicant
      */
     public function setStatus($status)
     {
