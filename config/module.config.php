@@ -5,7 +5,7 @@ return [
             'Itwapp\Service\Itwapp' => 'Itwapp\Service\Itwapp'
         ],
         'initializers' => [
-            'Itwapp\Service\ItwappInitalizer'
+            'Itwapp\Service\ItwappInitializer'
         ]
     ]
 ];
