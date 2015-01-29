@@ -47,7 +47,7 @@ AutoloaderFactory::factory(
 );
 
 // The module name is obtained using directory name or constant
-$moduleName = pathinfo($rootPath, PATHINFO_BASENAME);
+$moduleName = 'Itwapp';
 if (defined('MODULE_NAME')) {
     $moduleName = MODULE_NAME;
 }
