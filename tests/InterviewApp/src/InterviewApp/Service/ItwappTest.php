@@ -112,5 +112,111 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
             '53fb562418060018063095db',
             $interview->getId()
         );
+
+        return $interview;
+    }
+
+    public function testGetInterview()
+    {
+        $this->instance->getClient()->expects($this->once())
+            ->method('get')
+            ->willReturn([
+                '_id'       => '53fb562418060018063095db',
+                'name'      => 'Test Interview',
+                'questions' => [
+                    [
+                        "content"     => "question 1",
+                        "readingTime" => 60,
+                        "answerTime"  => 60,
+                        "number"      => 1
+                    ]
+                ],
+                'video'    => '',
+                'text'     => '',
+                'callback' => 'http://itwapp.io'
+            ])
+        ;
+
+        $interview = $this->instance->getInterview('53fb562418060018063095db');
+        $this->assertInstanceOf('InterviewApp\DAO\Interview', $interview);
+        $this->assertEquals('Test Interview', $interview->getName());
+
+        return $interview;
+    }
+
+    /**
+     * @depends testCreateInterview
+     */
+    public function testCreateApplicant(\InterviewApp\DAO\Interview $interview)
+    {
+        $response = $this->getMock('GuzzleHttp\Message\FutureResponse', [], [], '', false);
+        $this->instance->getClient()->expects($this->once())
+            ->method('post')
+            ->willReturn($response)
+        ;
+        $this->instance->getClient()->expects($this->once())
+            ->method('get')
+            ->willReturn([
+                '_id'       => '53fb562418060018063095db',
+                'name'      => 'Test Interview',
+                'questions' => [
+                    [
+                        "content"     => "question 1",
+                        "readingTime" => 60,
+                        "answerTime"  => 60,
+                        "number"      => 1
+                    ]
+                ],
+                'video'    => '',
+                'text'     => '',
+                'callback' => 'http://itwapp.io'
+            ])
+        ;
+        $response->expects($this->once())
+            ->method('json')
+            ->willReturn([
+                '_id'         => '53fb562418060018063095db',
+                'mail'        => 'jerome@itwapp.io',
+                'questions'   => null,
+                'responses'   => [
+                    [
+                        'file'     => 'http://video-prod-itwapp.s3.amazonaws.com/XXXXX/XXXX.mp4',
+                        'duration' => 60,
+                        'fileSize' => 1048576,
+                        'number'   => 1
+                    ]
+                ],
+                'interview'   => '53fb562418060018063095db',
+                'dateBegin'   => 1409045626568,
+                'dateEnd'     => 1409045926568,
+                'dateAnswer'  => 1409046526568,
+                'emailView'   => true,
+                'linkClicked' => true,
+                'firstname'   => 'Jérôme',
+                'lastname'    => 'Heissler',
+                'lang'        => 'fr',
+                'videoLink'   => '',
+                'text'        => '',
+                'deleted'     => false,
+                'callback'    => "http://itwapp.io",
+                'status'      => 0
+            ])
+        ;
+
+        $applicant = $this->instance->createApplicant(
+            'jerome@itwapp.io',
+            'fr',
+            true,
+            1409045626568,
+            $interview
+        );
+        $this->assertInstanceOf(
+            'InterviewApp\DAO\Applicant',
+            $applicant
+        );
+        $this->assertEquals(
+            '53fb562418060018063095db',
+            $applicant->getId()
+        );
     }
 }
