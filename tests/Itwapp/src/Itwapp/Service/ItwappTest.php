@@ -62,9 +62,10 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
         $reflection = new \ReflectionClass(get_class($this->instance));
         $method = $reflection->getMethod('buildUrl');
         $method->setAccessible(true);
-        $this->assertEquals(
-            'http://itwapp.io/api/exemple/?apiKey=test&timestamp=' . time() . '&signature=' . md5(base64_encode(hash_hmac('sha256', 'GET:api/exemple/?apiKey=test&timestamp='.time(), md5('test'), true))),
-            $method->invokeArgs($this->instance, ['api/exemple/', 'GET'])
+
+        $this->assertRegExp(
+            "#http:\/\/itwapp.io\/api\/exemple\/\?apiKey=.*&timestamp=.*&signature=.*#",
+            $method->invokeArgs($this->instance, ['/api/exemple/', 'GET'])
         );
     }
 
@@ -118,8 +119,10 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
 
     public function testGetInterview()
     {
-        $this->instance->getClient()->expects($this->once())
-            ->method('get')
+        $response = $this->getMock('GuzzleHttp\Message\FutureResponse', [], [], '', false);
+
+        $response->expects($this->once())
+            ->method('json')
             ->willReturn([
                 '_id'       => '53fb562418060018063095db',
                 'name'      => 'Test Interview',
@@ -135,6 +138,11 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
                 'text'     => '',
                 'callback' => 'http://itwapp.io'
             ])
+        ;
+
+        $this->instance->getClient()->expects($this->once())
+            ->method('get')
+            ->willReturn($response)
         ;
 
         $interview = $this->instance->getInterview('53fb562418060018063095db');
@@ -149,30 +157,18 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateApplicant(\Itwapp\DAO\Interview $interview)
     {
-        $response = $this->getMock('GuzzleHttp\Message\FutureResponse', [], [], '', false);
+        $responsePOST = $this->getMock('GuzzleHttp\Message\FutureResponse', [], [], '', false);
+        $responseGET  = clone $responsePOST;
+
         $this->instance->getClient()->expects($this->once())
             ->method('post')
-            ->willReturn($response)
+            ->willReturn($responsePOST)
         ;
         $this->instance->getClient()->expects($this->once())
             ->method('get')
-            ->willReturn([
-                '_id'       => '53fb562418060018063095db',
-                'name'      => 'Test Interview',
-                'questions' => [
-                    [
-                        "content"     => "question 1",
-                        "readingTime" => 60,
-                        "answerTime"  => 60,
-                        "number"      => 1
-                    ]
-                ],
-                'video'    => '',
-                'text'     => '',
-                'callback' => 'http://itwapp.io'
-            ])
+            ->willReturn($responseGET)
         ;
-        $response->expects($this->once())
+        $responsePOST->expects($this->once())
             ->method('json')
             ->willReturn([
                 '_id'         => '53fb562418060018063095db',
@@ -200,6 +196,24 @@ class ItwappTest extends \PHPUnit_Framework_TestCase
                 'deleted'     => false,
                 'callback'    => "http://itwapp.io",
                 'status'      => 0
+            ])
+        ;
+        $responseGET->expects($this->once())
+            ->method('json')
+            ->willReturn([
+                '_id'       => '53fb562418060018063095db',
+                'name'      => 'Test Interview',
+                'questions' => [
+                    [
+                        "content"     => "question 1",
+                        "readingTime" => 60,
+                        "answerTime"  => 60,
+                        "number"      => 1
+                    ]
+                ],
+                'video'    => '',
+                'text'     => '',
+                'callback' => 'http://itwapp.io'
             ])
         ;
 
