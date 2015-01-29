@@ -1,5 +1,5 @@
 {
-    "name": "assessfirst/InterviewAppModule",
+    "name": "assessfirst/itwapp-module",
     "description": "InterviewApp ZF2 module",
     "keywords": [
         "InterviewApp",
@@ -10,7 +10,7 @@
     "authors": [
         {
             "name"    : "Assessfirst IT",
-            "homepage": "https://github.com/assessfirst/InterviewAppModule"
+            "homepage": "https://github.com/assessfirst/itwapp-module"
         }
     ],
     "require": {
