@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace InterviewApp\DAO;
+namespace Itwapp\DAO;
 
 /**
  * Description of DAOAbstract
@@ -25,7 +25,7 @@ abstract class DAOAbstract
 
     /**
      * @param array $data
-     * 
+     *
      * @return \InterviewApp\DAO\DAOAbstract
      */
     public function setData(array $data)

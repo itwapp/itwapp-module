@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace InterviewApp\Service;
+namespace Itwapp\Service;
 
 /**
  * Description of Itwapp
