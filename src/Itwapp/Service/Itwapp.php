@@ -105,6 +105,18 @@ class Itwapp implements \Zend\ServiceManager\ServiceLocatorAwareInterface
         return (new \Itwapp\DAO\Applicant())->setData($data);
     }
 
+    public function getApplicant($id)
+    {
+        $url       = $this->buildUrl('/api/v1/applicant/'.$id, 'GET');
+
+        $response  = $this->getClient()->get($url);
+
+        $data              = $response->json();
+        $data['interview'] = $this->getInterview($data['interview']);
+
+        return (new \Itwapp\DAO\Applicant())->setData($data);
+    }
+
     protected function buildUrl($action, $mode)
     {
         $config  = $this->getServiceLocator()->get('config');
